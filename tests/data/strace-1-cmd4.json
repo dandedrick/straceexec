@@ -1,0 +1,22 @@
+{
+   "env" : {
+      "GDM_LANG" : "en_US.UTF-8",
+      "USERNAME" : "ddedrick",
+      "PWD" : "/tmp",
+      "USER" : "ddedrick",
+      "HOME" : "/home/ddedrick",
+      "SHELL" : "/bin/bash",
+      "PATH" : "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin",
+      "_" : "/usr/bin/env",
+      "LANG" : "en_US.UTF-8",
+      "EDITOR" : "vimx",
+      "DISPLAY" : ":1",
+      "output" : "default"
+   },
+   "command" : "/usr/bin/bash",
+   "args" : [
+      "bash",
+      "-c",
+      "echo $output > output1.file"
+   ]
+}

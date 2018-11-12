@@ -1,0 +1,22 @@
+86751 execve("/usr/bin/bash", ["bash", "-c", "env output=default bash -c 'echo $output > output1.file';"], ["LANG=en_US.UTF-8", "GDM_LANG=en_US.UTF-8", "DISPLAY=:1", "EDITOR=vimx", "USERNAME=ddedrick", "USER=ddedrick", "PWD=/tmp", "HOME=/home/ddedrick", "SHELL=/bin/bash", "PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin", "_=/usr/bin/strace"]) = 0
+86752 +++ exited with 0 +++
+86751 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=86752, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+86753 +++ exited with 0 +++
+86751 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=86753, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+86754 +++ exited with 0 +++
+86751 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=86754, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+86756 +++ exited with 0 +++
+86751 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=86756, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+86751 execve("/usr/bin/env", ["env", "output=default", "bash", "-c", "echo $output > output1.file"], ["LANG=en_US.UTF-8", "GDM_LANG=en_US.UTF-8", "DISPLAY=:1", "EDITOR=vimx", "USERNAME=ddedrick", "USER=ddedrick", "PWD=/tmp", "HOME=/home/ddedrick", "SHELL=/bin/bash", "PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin", "_=/usr/bin/env"]) = 0
+86751 execve("/usr/local/bin/bash", ["bash", "-c", "echo $output > output1.file"], ["LANG=en_US.UTF-8", "GDM_LANG=en_US.UTF-8", "DISPLAY=:1", "EDITOR=vimx", "USERNAME=ddedrick", "USER=ddedrick", "PWD=/tmp", "HOME=/home/ddedrick", "SHELL=/bin/bash", "PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin", "_=/usr/bin/env", "output=default"]) = -1 ENOENT (No such file or directory)
+86751 execve("/usr/local/sbin/bash", ["bash", "-c", "echo $output > output1.file"], ["LANG=en_US.UTF-8", "GDM_LANG=en_US.UTF-8", "DISPLAY=:1", "EDITOR=vimx", "USERNAME=ddedrick", "USER=ddedrick", "PWD=/tmp", "HOME=/home/ddedrick", "SHELL=/bin/bash", "PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin", "_=/usr/bin/env", "output=default"]) = -1 ENOENT (No such file or directory)
+86751 execve("/usr/bin/bash", ["bash", "-c", "echo $output > output1.file"], ["LANG=en_US.UTF-8", "GDM_LANG=en_US.UTF-8", "DISPLAY=:1", "EDITOR=vimx", "USERNAME=ddedrick", "USER=ddedrick", "PWD=/tmp", "HOME=/home/ddedrick", "SHELL=/bin/bash", "PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin", "_=/usr/bin/env", "output=default"]) = 0
+86758 +++ exited with 0 +++
+86751 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=86758, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+86759 +++ exited with 0 +++
+86751 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=86759, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+86760 +++ exited with 0 +++
+86751 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=86760, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+86762 +++ exited with 0 +++
+86751 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=86762, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+86751 +++ exited with 0 +++

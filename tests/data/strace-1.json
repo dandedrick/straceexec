@@ -1,0 +1,112 @@
+[
+   {
+      "command" : "/usr/bin/bash",
+      "args" : [
+         "bash",
+         "-c",
+         "env output=default bash -c 'echo $output > output1.file';"
+      ],
+      "env" : {
+         "USERNAME" : "ddedrick",
+         "LANG" : "en_US.UTF-8",
+         "GDM_LANG" : "en_US.UTF-8",
+         "PATH" : "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin",
+         "USER" : "ddedrick",
+         "EDITOR" : "vimx",
+         "PWD" : "/tmp",
+         "HOME" : "/home/ddedrick",
+         "SHELL" : "/bin/bash",
+         "DISPLAY" : ":1",
+         "_" : "/usr/bin/strace"
+      }
+   },
+   {
+      "args" : [
+         "env",
+         "output=default",
+         "bash",
+         "-c",
+         "echo $output > output1.file"
+      ],
+      "command" : "/usr/bin/env",
+      "env" : {
+         "PWD" : "/tmp",
+         "EDITOR" : "vimx",
+         "HOME" : "/home/ddedrick",
+         "SHELL" : "/bin/bash",
+         "DISPLAY" : ":1",
+         "_" : "/usr/bin/env",
+         "USERNAME" : "ddedrick",
+         "LANG" : "en_US.UTF-8",
+         "GDM_LANG" : "en_US.UTF-8",
+         "PATH" : "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin",
+         "USER" : "ddedrick"
+      }
+   },
+   {
+      "args" : [
+         "bash",
+         "-c",
+         "echo $output > output1.file"
+      ],
+      "command" : "/usr/local/bin/bash",
+      "env" : {
+         "PATH" : "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin",
+         "USER" : "ddedrick",
+         "LANG" : "en_US.UTF-8",
+         "USERNAME" : "ddedrick",
+         "GDM_LANG" : "en_US.UTF-8",
+         "DISPLAY" : ":1",
+         "_" : "/usr/bin/env",
+         "EDITOR" : "vimx",
+         "PWD" : "/tmp",
+         "SHELL" : "/bin/bash",
+         "HOME" : "/home/ddedrick",
+         "output" : "default"
+      }
+   },
+   {
+      "env" : {
+         "USER" : "ddedrick",
+         "PATH" : "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin",
+         "USERNAME" : "ddedrick",
+         "LANG" : "en_US.UTF-8",
+         "GDM_LANG" : "en_US.UTF-8",
+         "DISPLAY" : ":1",
+         "_" : "/usr/bin/env",
+         "output" : "default",
+         "EDITOR" : "vimx",
+         "PWD" : "/tmp",
+         "HOME" : "/home/ddedrick",
+         "SHELL" : "/bin/bash"
+      },
+      "command" : "/usr/local/sbin/bash",
+      "args" : [
+         "bash",
+         "-c",
+         "echo $output > output1.file"
+      ]
+   },
+   {
+      "command" : "/usr/bin/bash",
+      "args" : [
+         "bash",
+         "-c",
+         "echo $output > output1.file"
+      ],
+      "env" : {
+         "USER" : "ddedrick",
+         "PATH" : "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin",
+         "LANG" : "en_US.UTF-8",
+         "USERNAME" : "ddedrick",
+         "GDM_LANG" : "en_US.UTF-8",
+         "DISPLAY" : ":1",
+         "_" : "/usr/bin/env",
+         "output" : "default",
+         "EDITOR" : "vimx",
+         "PWD" : "/tmp",
+         "SHELL" : "/bin/bash",
+         "HOME" : "/home/ddedrick"
+      }
+   }
+]
