@@ -47,7 +47,10 @@ def print_commands(commands):
     rows, columns = os.popen('stty size', 'r').read().split()
     columns = int(columns)
     for command in commands:
-        line = str(index) + ": " + " ".join(command["args"]) + " -:ENV:- " + " ".join(command["env"]);
+        env_string = ""
+        for key, value in command['env'].items():
+            env_string = env_string + " " + key + "=" + value
+        line = str(index) + ": " + " ".join(command["args"]) + " -:ENV:-" + env_string;
     
         if columns < len(line):
             line = line[:columns]
