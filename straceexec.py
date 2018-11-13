@@ -51,7 +51,7 @@ def print_commands(commands):
         for key, value in command['env'].items():
             env_string = env_string + " " + key + "=" + value
         line = str(index) + ": " + " ".join(command["args"]) + " -:ENV:-" + env_string;
-    
+
         if columns < len(line):
             line = line[:columns]
         print(line)
