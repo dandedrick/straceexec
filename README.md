@@ -1,5 +1,6 @@
 # straceexec
 [![Build Status](https://travis-ci.org/dandedrick/straceexec.svg?branch=master)](https://travis-ci.org/dandedrick/straceexec)
+[![PyPI version](https://badge.fury.io/py/straceexec.svg)](https://badge.fury.io/py/straceexec)
 
 
 straceexec is a python script that allows for playback and analysis of
