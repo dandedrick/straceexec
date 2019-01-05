@@ -2,6 +2,7 @@
 import os
 import re
 import sys
+import six
 
 def collect_commands(input_file):
     commands = []
@@ -62,12 +63,7 @@ def get_selection(commands):
     index = len(commands)
     while invalid_input:
         input_prompt = "Enter the number of the command you would like to execute\n\tAppend an n to not copy the environment\n\tAppend a p to print the full command and exit\n\tAppend a g to run under gdb\nSelect: "
-        try:
-            # python2 support
-            selected = raw_input(input_prompt)
-        except:
-            # python3 support
-            selected = input(input_prompt)
+        selected = six.moves.input(input_prompt)
         match = re.match(r'([0-9]+)([npg]?)', selected)
         if match:
             command_index = int(match.group(1))

@@ -58,11 +58,7 @@ class TestStrace(unittest.TestCase):
         json_file = open(self.datadir + 'strace-1.json', 'r')
         commands = json.loads(json_file.read())
         json_file.close()
-        try:
-            raw_input
-            input_str='__builtin__.raw_input'
-        except:
-            input_str='builtins.input'
+        input_str = 'six.moves.input'
 
         with mock.patch(input_str, return_value='4'):
             command = straceexec.get_selection(commands)
