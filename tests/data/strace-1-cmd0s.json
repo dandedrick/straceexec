@@ -1,0 +1,22 @@
+{
+   "args" : [
+      "bash",
+      "-c",
+      "env output=default bash -c 'echo $output > output1.file';"
+   ],
+   "command" : "/usr/bin/bash",
+   "env" : {
+      "DISPLAY" : ":1",
+      "EDITOR" : "vimx",
+      "GDM_LANG" : "en_US.UTF-8",
+      "HOME" : "/home/ddedrick",
+      "LANG" : "en_US.UTF-8",
+      "PATH" : "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin",
+      "PWD" : "/tmp",
+      "SHELL" : "/bin/bash",
+      "USER" : "ddedrick",
+      "USERNAME" : "ddedrick",
+      "_" : "/usr/bin/strace"
+   },
+   "mode" : "write_script"
+}

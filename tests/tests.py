@@ -137,6 +137,19 @@ class TestStrace(unittest.TestCase):
             expected = json.loads(json_result.read())
         self.assertEqual(command, expected)
 
+    def test_get_selection_script(self):
+        with open(self.datadir + 'strace-1.json', 'r') as json_file:
+            commands = json.loads(json_file.read())
+        input_str = 'six.moves.input'
+
+        with mock.patch(input_str, return_value="0s"):
+            command = straceexec.get_selection(commands)
+        with open(self.datadir + 'strace-1-cmd0s.json') as json_result:
+            expected = json.loads(json_result.read())
+        with open("1", "w") as f:
+            f.write(json.dumps(command))
+        self.assertEqual(command, expected)
+
 
 if __name__ == '__main__':
     unittest.main()
