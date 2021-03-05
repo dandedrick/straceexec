@@ -83,7 +83,7 @@ class TestStrace(unittest.TestCase):
             commands = straceexec.collect_commands(input_file)
         with open(self.datadir + 'strace-1.json', 'r') as json_file:
             commands_expected = json.loads(json_file.read())
-        self.assertTrue(commands == commands_expected)
+        self.assertEqual(commands, commands_expected)
 
     def test_get_selection_simple(self):
         with open(self.datadir + 'strace-1.json', 'r') as json_file:
@@ -94,7 +94,7 @@ class TestStrace(unittest.TestCase):
             command = straceexec.get_selection(commands)
             with open(self.datadir + 'strace-1-cmd4.json', 'r') as json_result:
                 expected = json.loads(json_result.read())
-            self.assertTrue(command == expected)
+            self.assertEqual(command, expected)
 
     def test_get_selection_noenv(self):
         with open(self.datadir + 'strace-1.json', 'r') as json_file:
