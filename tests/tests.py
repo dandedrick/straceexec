@@ -57,13 +57,12 @@ class TestStrace(unittest.TestCase):
                    'env': os.environ, 'mode': 'print_only'}
         # for now we ignore the actual output and just ensure that it doesn't
         # run the command
-        null_file = open("/dev/null", "w")
-        with mock.patch('sys.stdout', null_file):
-            try:
-                straceexec.execute_command(command)
-            except SystemExit:
-                pass
-        null_file.close()
+        with open("/dev/null", "w") as null_file:
+            with mock.patch('sys.stdout', null_file):
+                try:
+                    straceexec.execute_command(command)
+                except SystemExit:
+                    pass
         self.assertFalse(os.path.exists('test_output'))
 
     def test_execute_command_write_script(self):
@@ -80,25 +79,21 @@ class TestStrace(unittest.TestCase):
         self.assertTrue(os.path.exists('test_output'))
 
     def test_strace_parse(self):
-        input_file = open(self.datadir + 'strace-1.log', 'r')
-        commands = straceexec.collect_commands(input_file)
-        input_file.close()
-        json_file = open(self.datadir + 'strace-1.json', 'r')
-        commands_expected = json.loads(json_file.read())
-        json_file.close()
+        with open(self.datadir + 'strace-1.log', 'r') as input_file:
+            commands = straceexec.collect_commands(input_file)
+        with open(self.datadir + 'strace-1.json', 'r') as json_file:
+            commands_expected = json.loads(json_file.read())
         self.assertTrue(commands == commands_expected)
 
     def test_get_selection_simple(self):
-        json_file = open(self.datadir + 'strace-1.json', 'r')
-        commands = json.loads(json_file.read())
-        json_file.close()
+        with open(self.datadir + 'strace-1.json', 'r') as json_file:
+            commands = json.loads(json_file.read())
         input_str = 'six.moves.input'
 
         with mock.patch(input_str, return_value='4'):
             command = straceexec.get_selection(commands)
-            json_result = open(self.datadir + 'strace-1-cmd4.json', 'r')
-            expected = json.loads(json_result.read())
-            json_result.close()
+            with open(self.datadir + 'strace-1-cmd4.json', 'r') as json_result:
+                expected = json.loads(json_result.read())
             self.assertTrue(command == expected)
 
     def test_get_selection_noenv(self):
