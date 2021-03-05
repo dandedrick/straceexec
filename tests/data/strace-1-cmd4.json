@@ -18,5 +18,6 @@
       "bash",
       "-c",
       "echo $output > output1.file"
-   ]
+   ],
+   "mode": "execute"
 }

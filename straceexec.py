@@ -73,15 +73,17 @@ def get_selection(commands):
 \tAppend an n to not copy the environment
 \tAppend a p to print the full command and exit
 \tAppend a g to run under gdb
+\tAppend an s to write a script to execute the command
 Select: """
         selected = six.moves.input(input_prompt)
-        match = re.match(r'([0-9]+)([npg]?)', selected)
+        match = re.match(r'([0-9]+)([npgs]?)', selected)
         if match:
             command_index = int(match.group(1))
+            commands[command_index]["mode"] = "execute"
             if match.group(2) == "n":
                 commands[command_index]["env"] = os.environ
             elif match.group(2) == "p":
-                commands[command_index]["print_only"] = True
+                commands[command_index]["mode"] = "print_only"
             elif match.group(2) == "g":
                 new_args = []
                 new_args.append("gdb")
@@ -98,6 +100,8 @@ Select: """
                 commands[command_index]["command"] = "/usr/bin/gdb"
                 commands[command_index]["args"] = new_args
                 commands[command_index]["env"] = os.environ
+            elif match.group(2) == "s":
+                commands[command_index]["mode"] = "write_script"
             if command_index < index:
                 invalid_input = False
             else:
@@ -126,9 +130,29 @@ def print_command(command):
                                                         env_string))
 
 
+def write_script(command):
+    with open("command.sh", "w") as f:
+        f.write("#!/bin/sh\n")
+        f.write("env -i \\\n")
+        for key, value in command['env'].items():
+            f.write("'")
+            f.write(key)
+            f.write('=')
+            f.write(value.replace("'", "'\"'\"'"))
+            f.write("' \\\n")
+        for arg in command["args"]:
+            f.write("'")
+            f.write(arg.replace("'", "'\"'\"'"))
+            f.write("' ")
+        f.write("\n")
+
+
 def execute_command(command):
-    if 'print_only' in command:
+    if command["mode"] == 'print_only':
         print_command(command)
+        sys.exit(0)
+    elif command["mode"] == 'write_script':
+        write_script(command)
         sys.exit(0)
     os.execve(command["command"], command["args"], command["env"])
 

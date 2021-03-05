@@ -15,6 +15,10 @@ class TestStrace(unittest.TestCase):
         files = glob.glob('test_output*')
         for output_file in files:
             os.unlink(output_file)
+        try:
+            os.unlink("command.sh")
+        except OSError:
+            pass
 
     def setUp(self):
         self.remove_test_files()
@@ -26,7 +30,8 @@ class TestStrace(unittest.TestCase):
     def test_execute_command(self):
         command = {'command': '/bin/sh',
                    'args': ['sh', '-c', 'touch test_output'],
-                   'env': os.environ}
+                   'env': os.environ,
+                   'mode': 'execute'}
         pid = os.fork()
         if pid == 0:
             straceexec.execute_command(command)
@@ -38,7 +43,8 @@ class TestStrace(unittest.TestCase):
         env['TEST_SUFFIX'] = 'foo'
         command = {'command': '/bin/sh',
                    'args': ['sh', '-c', 'touch test_output$TEST_SUFFIX'],
-                   'env': env}
+                   'env': env,
+                   'mode': 'execute'}
         pid = os.fork()
         if pid == 0:
             straceexec.execute_command(command)
@@ -48,7 +54,7 @@ class TestStrace(unittest.TestCase):
     def test_execute_command_print_only(self):
         command = {'command': '/bin/sh',
                    'args': ['sh', '-c', 'touch test_output'],
-                   'env': os.environ, 'print_only': True}
+                   'env': os.environ, 'mode': 'print_only'}
         # for now we ignore the actual output and just ensure that it doesn't
         # run the command
         null_file = open("/dev/null", "w")
@@ -59,6 +65,19 @@ class TestStrace(unittest.TestCase):
                 pass
         null_file.close()
         self.assertFalse(os.path.exists('test_output'))
+
+    def test_execute_command_write_script(self):
+        command = {'command': '/bin/sh',
+                   'args': ['sh', '-c', 'touch test_output'],
+                   'env': os.environ, 'mode': 'write_script'}
+        try:
+            straceexec.execute_command(command)
+        except SystemExit:
+            pass
+        self.assertFalse(os.path.exists('test_output'))
+        self.assertTrue(os.path.exists('command.sh'))
+        os.system("chmod a+x ./command.sh && ./command.sh")
+        self.assertTrue(os.path.exists('test_output'))
 
     def test_strace_parse(self):
         input_file = open(self.datadir + 'strace-1.log', 'r')
