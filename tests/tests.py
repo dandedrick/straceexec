@@ -52,10 +52,10 @@ class TestStrace(unittest.TestCase):
         # for now we ignore the actual output and just ensure that it doesn't
         # run the command
         null_file = open("/dev/null", "w")
-        with mock.patch('sys.stdout', null_file) as fake_out:
+        with mock.patch('sys.stdout', null_file):
             try:
                 straceexec.execute_command(command)
-            except SystemExit as e:
+            except SystemExit:
                 pass
         null_file.close()
         self.assertFalse(os.path.exists('test_output'))
