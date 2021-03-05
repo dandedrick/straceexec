@@ -52,7 +52,7 @@ pull requests or issues as needed.
 
 
 ## Author
-Written by Dan Dedrick to simplfy isolating, reproducing and tweaking build
+Written by Dan Dedrick to simplify isolating, reproducing and tweaking build
 system issues.
 
 
