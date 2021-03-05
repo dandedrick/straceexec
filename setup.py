@@ -9,7 +9,7 @@ setuptools.setup(
         version='1.0.0',
         py_modules=['straceexec'],
         entry_points={
-            'console_scripts' : [
+            'console_scripts': [
                 'straceexec = straceexec:main_func',
                 ]
             },

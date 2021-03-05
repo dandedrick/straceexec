@@ -4,6 +4,7 @@ import re
 import sys
 import six
 
+
 def collect_commands(input_file):
     commands = []
     exec_line_re = re.compile(r'([0-9]+ |\[pid [0-9]+\] |) *execve\("([^"]*)", \[(.*)\], \[(.*)\](\)| <unfinished \.\.\.>)*')
@@ -15,7 +16,7 @@ def collect_commands(input_file):
             # We don't want to split arguments that contain , and " but we need
             # to remove them to properly split and save away the arguments.
             args = []
-            first=True
+            first = True
             last_arg = None
             for arg in exec_match.group(3).split('", "'):
                 arg = arg.encode().decode('unicode_escape')
@@ -27,7 +28,7 @@ def collect_commands(input_file):
                 last_arg = arg;
             args.append(last_arg[:-1])
             env = {}
-            first=True
+            first = True
             last_var = None
             for var in exec_match.group(4).split('", "'):
                 var = var.encode().decode('unicode_escape')
@@ -40,8 +41,9 @@ def collect_commands(input_file):
                 last_var = var
             (key, value) = last_var[:-1].split("=", 1)
             env[key] = value
-            commands.append({"command":command, "args":args, "env":env})
+            commands.append({"command": command, "args": args, "env": env})
     return commands
+
 
 def print_commands(commands):
     index = 0
@@ -57,6 +59,7 @@ def print_commands(commands):
             line = line[:columns]
         print(line)
         index = index + 1
+
 
 def get_selection(commands):
     invalid_input = True
@@ -98,9 +101,10 @@ Select: """
             print("Invalid entry")
     return commands[command_index]
 
+
 def print_command(command):
     print_args = ""
-    first=True
+    first = True
     for arg in command["args"]:
         if first:
             print_args = arg
@@ -111,13 +115,15 @@ def print_command(command):
     for key, value in command['env'].items():
         env_string = env_string + key + "=" + value + "\n"
 
-    print("\nPATH:\n" + command["command"] + "\n\nARGS:\n" + print_args + "\n\nENV:\n"  + env_string)
+    print("\nPATH:\n" + command["command"] + "\n\nARGS:\n" + print_args + "\n\nENV:\n" + env_string)
+
 
 def execute_command(command):
     if 'print_only' in command:
         print_command(command)
         sys.exit(0)
     os.execve(command["command"], command["args"], command["env"])
+
 
 def main_func():
     if len(sys.argv) > 1:
