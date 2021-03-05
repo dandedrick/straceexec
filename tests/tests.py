@@ -2,7 +2,7 @@
 import unittest
 try:
     import mock
-except:
+except Exception:
     from unittest import mock
 import straceexec
 import glob
