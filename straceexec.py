@@ -62,7 +62,11 @@ def get_selection(commands):
     invalid_input = True
     index = len(commands)
     while invalid_input:
-        input_prompt = "Enter the number of the command you would like to execute\n\tAppend an n to not copy the environment\n\tAppend a p to print the full command and exit\n\tAppend a g to run under gdb\nSelect: "
+        input_prompt = """Enter the number of the command you would like to execute
+\tAppend an n to not copy the environment
+\tAppend a p to print the full command and exit
+\tAppend a g to run under gdb
+Select: """
         selected = six.moves.input(input_prompt)
         match = re.match(r'([0-9]+)([npg]?)', selected)
         if match:
