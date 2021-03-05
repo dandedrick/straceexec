@@ -126,6 +126,17 @@ class TestStrace(unittest.TestCase):
         self.assertEqual(command, expected)
         self.assertNotIn("STRACE_TEST_ENV", command["env"])
 
+    def test_get_selection_print(self):
+        with open(self.datadir + 'strace-1.json', 'r') as json_file:
+            commands = json.loads(json_file.read())
+        input_str = 'six.moves.input'
+
+        with mock.patch(input_str, return_value="1p"):
+            command = straceexec.get_selection(commands)
+        with open(self.datadir + 'strace-1-cmd1p.json') as json_result:
+            expected = json.loads(json_result.read())
+        self.assertEqual(command, expected)
+
 
 if __name__ == '__main__':
     unittest.main()
