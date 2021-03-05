@@ -62,7 +62,8 @@
          "PWD" : "/tmp",
          "SHELL" : "/bin/bash",
          "HOME" : "/home/ddedrick",
-         "output" : "default"
+         "output" : "default",
+         "STRACE_TEST_ENV" : "FOO"
       }
    },
    {

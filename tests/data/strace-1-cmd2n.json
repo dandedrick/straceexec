@@ -1,0 +1,9 @@
+{
+   "args" : [
+      "bash",
+      "-c",
+      "echo $output > output1.file"
+   ],
+   "command" : "/usr/local/bin/bash",
+   "mode": "execute"
+}

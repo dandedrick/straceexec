@@ -88,7 +88,7 @@ class TestStrace(unittest.TestCase):
         json_file.close()
         self.assertTrue(commands == commands_expected)
 
-    def test_get_selection(self):
+    def test_get_selection_simple(self):
         json_file = open(self.datadir + 'strace-1.json', 'r')
         commands = json.loads(json_file.read())
         json_file.close()
@@ -100,6 +100,31 @@ class TestStrace(unittest.TestCase):
             expected = json.loads(json_result.read())
             json_result.close()
             self.assertTrue(command == expected)
+
+    def test_get_selection_noenv(self):
+        with open(self.datadir + 'strace-1.json', 'r') as json_file:
+            commands = json.loads(json_file.read())
+        input_str = 'six.moves.input'
+
+        if "STRACE_TEST_ENV" in os.environ:
+            del os.environ["STRACE_TEST_ENV"]
+
+        with mock.patch(input_str, return_value="2n"):
+            command = straceexec.get_selection(commands)
+        with open(self.datadir + 'strace-1-cmd2n.json', 'r') as json_result:
+            expected = json.loads(json_result.read())
+
+        # os.environ is not good for comparison or conversion to json so we
+        # have to convert it into a dict here.
+        expected["env"] = {}
+        for key in os.environ:
+            expected["env"][key] = os.environ[key]
+        command_env = command["env"]
+        command["env"] = {}
+        for key in command_env:
+            command["env"][key] = command_env[key]
+        self.assertEqual(command, expected)
+        self.assertNotIn("STRACE_TEST_ENV", command["env"])
 
 
 if __name__ == '__main__':
