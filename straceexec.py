@@ -7,14 +7,17 @@ import six
 
 def collect_commands(input_file):
     commands = []
-    exec_line_re = re.compile(r'([0-9]+ |\[pid [0-9]+\] |) *execve\("([^"]*)", \[(.*)\], \[(.*)\](\)| <unfinished \.\.\.>)*')
+    exec_line_re = re.compile(r'([0-9]+ |\[pid [0-9]+\] |)'
+                              r' *execve\("([^"]*)", \[(.*)\], \[(.*)\]'
+                              r'(\)| <unfinished \.\.\.>)*')
     for line in input_file:
         exec_match = exec_line_re.match(line)
         if exec_match:
             command = exec_match.group(2)
-            # We have to do some manipulation to remove the '"'s and ','s properly.
-            # We don't want to split arguments that contain , and " but we need
-            # to remove them to properly split and save away the arguments.
+            # We have to do some manipulation to remove the '"'s and ','s
+            # properly.  We don't want to split arguments that contain , and "
+            # but we need to remove them to properly split and save away the
+            # arguments.
             args = []
             first = True
             last_arg = None
@@ -53,7 +56,8 @@ def print_commands(commands):
         env_string = ""
         for key, value in command['env'].items():
             env_string = env_string + " " + key + "=" + value
-        line = str(index) + ": " + " ".join(command["args"]) + " -:ENV:-" + env_string
+        line = "{}: {} -:ENV:-{}".format(index, " ".join(command["args"]),
+                                         env_string)
 
         if columns < len(line):
             line = line[:columns]
@@ -84,7 +88,8 @@ Select: """
                 new_args.append("-ex")
                 set_gdb_args = 'set args'
                 for arg in commands[command_index]["args"][1:]:
-                    set_gdb_args = set_gdb_args + ' "' + arg.replace('"', '\"') + '"'
+                    set_gdb_args = '{} "{}"'.format(set_gdb_args,
+                                                    arg.replace('"', '\"'))
                 new_args.append(set_gdb_args)
                 for key, value in commands[command_index]['env'].items():
                     new_args.append("-ex")
@@ -96,7 +101,8 @@ Select: """
             if command_index < index:
                 invalid_input = False
             else:
-                print("Invalid selection. The value must be less than " + str(index) + ".")
+                print("Invalid selection. The value must be less than " +
+                      str(index) + ".")
         else:
             print("Invalid entry")
     return commands[command_index]
@@ -115,7 +121,9 @@ def print_command(command):
     for key, value in command['env'].items():
         env_string = env_string + key + "=" + value + "\n"
 
-    print("\nPATH:\n" + command["command"] + "\n\nARGS:\n" + print_args + "\n\nENV:\n" + env_string)
+    print("\nPATH:\n{}\n\nARGS:\n{}\n\nENV:\n{}".format(command["command"],
+                                                        print_args,
+                                                        env_string))
 
 
 def execute_command(command):

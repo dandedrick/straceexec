@@ -24,7 +24,9 @@ class TestStrace(unittest.TestCase):
         self.remove_test_files()
 
     def test_execute_command(self):
-        command = {'command': '/bin/sh', 'args': ['sh', '-c', 'touch test_output'], 'env': os.environ}
+        command = {'command': '/bin/sh',
+                   'args': ['sh', '-c', 'touch test_output'],
+                   'env': os.environ}
         pid = os.fork()
         if pid == 0:
             straceexec.execute_command(command)
@@ -34,7 +36,9 @@ class TestStrace(unittest.TestCase):
     def test_execute_command_env(self):
         env = os.environ
         env['TEST_SUFFIX'] = 'foo'
-        command = {'command': '/bin/sh', 'args': ['sh', '-c', 'touch test_output$TEST_SUFFIX'], 'env': env}
+        command = {'command': '/bin/sh',
+                   'args': ['sh', '-c', 'touch test_output$TEST_SUFFIX'],
+                   'env': env}
         pid = os.fork()
         if pid == 0:
             straceexec.execute_command(command)
@@ -42,8 +46,11 @@ class TestStrace(unittest.TestCase):
         self.assertTrue(os.path.exists('test_outputfoo'))
 
     def test_execute_command_print_only(self):
-        command = {'command': '/bin/sh', 'args': ['sh', '-c', 'touch test_output'], 'env': os.environ, 'print_only': True}
-        # for now we ignore the actual output and just ensure that it doesn't run the command
+        command = {'command': '/bin/sh',
+                   'args': ['sh', '-c', 'touch test_output'],
+                   'env': os.environ, 'print_only': True}
+        # for now we ignore the actual output and just ensure that it doesn't
+        # run the command
         null_file = open("/dev/null", "w")
         with mock.patch('sys.stdout', null_file) as fake_out:
             try:
