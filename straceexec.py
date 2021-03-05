@@ -68,7 +68,7 @@ def get_selection(commands):
         if match:
             command_index = int(match.group(1))
             if match.group(2) == "n":
-                commands[command_index]["environment"] = os.environ
+                commands[command_index]["env"] = os.environ
             elif match.group(2) == "p":
                 commands[command_index]["print_only"] = True
             elif match.group(2) == "g":
