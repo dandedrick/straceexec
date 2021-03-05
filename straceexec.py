@@ -11,7 +11,7 @@ def collect_commands(input_file):
     for line in input_file:
         exec_match = exec_line_re.match(line)
         if exec_match:
-            command = exec_match.group(2);
+            command = exec_match.group(2)
             # We have to do some manipulation to remove the '"'s and ','s properly.
             # We don't want to split arguments that contain , and " but we need
             # to remove them to properly split and save away the arguments.
@@ -25,7 +25,7 @@ def collect_commands(input_file):
                     first = False
                 if last_arg:
                     args.append(last_arg)
-                last_arg = arg;
+                last_arg = arg
             args.append(last_arg[:-1])
             env = {}
             first = True
@@ -53,7 +53,7 @@ def print_commands(commands):
         env_string = ""
         for key, value in command['env'].items():
             env_string = env_string + " " + key + "=" + value
-        line = str(index) + ": " + " ".join(command["args"]) + " -:ENV:-" + env_string;
+        line = str(index) + ": " + " ".join(command["args"]) + " -:ENV:-" + env_string
 
         if columns < len(line):
             line = line[:columns]
