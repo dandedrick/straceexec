@@ -6,7 +6,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as f:
 
 setuptools.setup(
     name='straceexec',
-    version='1.0.0',
+    version='1.1.0',
     py_modules=['straceexec'],
     entry_points={
         'console_scripts': [
