@@ -43,7 +43,9 @@ modifying this behavior. Appending an ```n``` will use the current
 environment instead of the one present in the strace log. Appending a
 ```p``` will not exec the command but instead print it in full along with
 its environment. Appending a ```g``` will start start up gdb with the
-executable, arguments, and environment already setup.
+executable, arguments, and environment already setup. Appending an ```s``` will
+generate a script named command.sh that will set the environment and run the
+the command.
 
 
 ## Contributing
