@@ -19,7 +19,6 @@ setuptools.setup(
     description='A tool for executing commands based on strace output',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    packages=setuptools.find_packages(),
     url="https://github.com/dandedrick/straceexec",
     classifiers=[
         "License :: OSI Approved :: MIT License",
