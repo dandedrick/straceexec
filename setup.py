@@ -13,7 +13,6 @@ setuptools.setup(
             'straceexec = straceexec:main_func',
             ]
         },
-    test_suite='tests',
     author='Dan Dedrick',
     author_email='dan.dedrick@gmail.com',
     description='A tool for executing commands based on strace output',

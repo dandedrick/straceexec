@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import unittest
 try:
     import mock
 except Exception:
@@ -8,9 +7,10 @@ import straceexec
 import glob
 import os
 import json
+import pytest
 
 
-class TestStrace(unittest.TestCase):
+class TestStrace:
     def remove_test_files(self):
         files = glob.glob('test_output*')
         for output_file in files:
@@ -20,11 +20,11 @@ class TestStrace(unittest.TestCase):
         except OSError:
             pass
 
-    def setUp(self):
+    @pytest.fixture(autouse=True)
+    def file_fixture(self):
         self.remove_test_files()
         self.datadir = os.path.dirname(os.path.abspath(__file__)) + '/data/'
-
-    def tearDown(self):
+        yield
         self.remove_test_files()
 
     def test_execute_command(self):
@@ -36,7 +36,7 @@ class TestStrace(unittest.TestCase):
         if pid == 0:
             straceexec.execute_command(command)
         os.waitpid(pid, 0)
-        self.assertTrue(os.path.exists('test_output'))
+        assert os.path.exists('test_output')
 
     def test_execute_command_env(self):
         env = os.environ
@@ -49,7 +49,7 @@ class TestStrace(unittest.TestCase):
         if pid == 0:
             straceexec.execute_command(command)
         os.waitpid(pid, 0)
-        self.assertTrue(os.path.exists('test_outputfoo'))
+        assert os.path.exists('test_outputfoo')
 
     def test_execute_command_print_only(self):
         command = {'command': '/bin/sh',
@@ -63,7 +63,7 @@ class TestStrace(unittest.TestCase):
                     straceexec.execute_command(command)
                 except SystemExit:
                     pass
-        self.assertFalse(os.path.exists('test_output'))
+        assert not os.path.exists('test_output')
 
     def test_execute_command_write_script(self):
         command = {'command': '/bin/sh',
@@ -73,17 +73,17 @@ class TestStrace(unittest.TestCase):
             straceexec.execute_command(command)
         except SystemExit:
             pass
-        self.assertFalse(os.path.exists('test_output'))
-        self.assertTrue(os.path.exists('command.sh'))
+        assert not os.path.exists('test_output')
+        assert os.path.exists('command.sh')
         os.system("chmod a+x ./command.sh && ./command.sh")
-        self.assertTrue(os.path.exists('test_output'))
+        assert os.path.exists('test_output')
 
     def test_strace_parse(self):
         with open(self.datadir + 'strace-1.log', 'r') as input_file:
             commands = straceexec.collect_commands(input_file)
         with open(self.datadir + 'strace-1.json', 'r') as json_file:
             commands_expected = json.loads(json_file.read())
-        self.assertEqual(commands, commands_expected)
+        assert commands == commands_expected
 
     def test_get_selection_simple(self):
         with open(self.datadir + 'strace-1.json', 'r') as json_file:
@@ -94,7 +94,7 @@ class TestStrace(unittest.TestCase):
             command = straceexec.get_selection(commands)
             with open(self.datadir + 'strace-1-cmd4.json', 'r') as json_result:
                 expected = json.loads(json_result.read())
-            self.assertEqual(command, expected)
+            assert command == expected
 
     def test_get_selection_noenv(self):
         with open(self.datadir + 'strace-1.json', 'r') as json_file:
@@ -118,8 +118,8 @@ class TestStrace(unittest.TestCase):
         command["env"] = {}
         for key in command_env:
             command["env"][key] = command_env[key]
-        self.assertEqual(command, expected)
-        self.assertNotIn("STRACE_TEST_ENV", command["env"])
+        assert command == expected
+        assert "STRACE_TEST_ENV" not in command["env"]
 
     def test_get_selection_print(self):
         with open(self.datadir + 'strace-1.json', 'r') as json_file:
@@ -130,7 +130,7 @@ class TestStrace(unittest.TestCase):
             command = straceexec.get_selection(commands)
         with open(self.datadir + 'strace-1-cmd1p.json') as json_result:
             expected = json.loads(json_result.read())
-        self.assertEqual(command, expected)
+        assert command == expected
 
     def test_get_selection_script(self):
         with open(self.datadir + 'strace-1.json', 'r') as json_file:
@@ -143,8 +143,4 @@ class TestStrace(unittest.TestCase):
             expected = json.loads(json_result.read())
         with open("1", "w") as f:
             f.write(json.dumps(command))
-        self.assertEqual(command, expected)
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert command == expected
