@@ -1,5 +1,5 @@
 # straceexec
-[![Build Status](https://travis-ci.org/dandedrick/straceexec.svg?branch=master)](https://travis-ci.org/dandedrick/straceexec)
+[![Build Status](https://github.com/dandedrick/straceexec/actions/workflows/run-tests.yaml/badge.svg?branch=master)](https://github.com/dandedrick/straceexec/actions)
 [![PyPI version](https://badge.fury.io/py/straceexec.svg)](https://badge.fury.io/py/straceexec)
 
 
